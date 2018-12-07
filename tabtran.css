@@ -1,0 +1,53 @@
+
+.content {
+    max-width: 1000px;
+    margin: auto;
+}
+
+body{
+	background-color: #81c79d;
+}
+
+h1{
+	color: #5468ff;
+	font-size:80px
+}
+
+.profile{
+	width: 20%;
+	margin: 0 auto;
+}
+
+.menuButton{
+	background-color: blue;
+	color: white;
+	border: none;
+	cursor: pointer;
+	width: 16%;
+}
+.menuButton:hover {
+    background-color: purple;
+}
+
+.tab{
+    font-family: "Courier New";
+}
+
+@media only screen and (max-width: 600px) {
+    .menuButton {
+        width: 30%;
+    }
+	.profile{
+	width: 60%;
+	margin: 0 auto;
+}
+
+	
+}
+
+@media only screen and (max-width: 1000px) {
+	h1{
+		font-size: 7.5vw;
+	}
+	
+}
