@@ -16,9 +16,11 @@ function transposeTab(){
     
     var tabRows = tab.split("\n");
     var output = "<div class='tab'>";
-
+    
+    tabRows = tabRows.filter(function(value){return value.length > 0;});
+    
     tabRows = transposer(tabRows,num);
-    for(i = 0; i < Math.min(tabRows.length,6); i++) {
+    for(i = 0; i < tabRows.length; i++) {
 		output += tabRows[i]+"<br>";
 	}
     
@@ -29,83 +31,91 @@ function transposer(arr,num){
 
     num = parseInt(num);
     stringNumber = arr.length;
+    totalRows = arr[0].length;
+    skipFlag = false;
+    caseVal = -1;
+    
     rowFlags = [];
-    skipFlags = [];
-    for (var i = 0; i < stringNumber; i++) {
-        skipFlags.push(false);
-    }
     for (var i = 0; i < stringNumber; i++) {
         rowFlags.push(-99);
     }
-    defaultState = rowFlags;
-    retArr = [];    
+    modRows = [];
+    for (var i = 0; i < stringNumber; i++) {
+        modRows.push(-99);
+    }
+    defaultState = rowFlags.slice();
+    
+    retArr = [];
     for (var i = 0; i < stringNumber; i++) {
         retArr.push("");
     }
-    totalRows = arr[0].length;
     
-    var noDash = skipFlags.slice();
     for(i = 0; i < totalRows; i++){
         for(j = 0; j<stringNumber; j++){
-            if (!skipFlags[j]){
-                c = arr[j][i];
-                d = arr[j][i+1];
-                if (c >= '0' && c <= '9'){
-                    if(d >= '0' && d <= '9'){
-                        rowFlags[j] = parseInt(c)*10+parseInt(d);
-                        skipFlags[j] = true;
-                    }
-                    else{
-                        rowFlags[j] = parseInt(c);
-                    }
+            c = arr[j][i];
+            d = arr[j][i+1];
+            if (c >= '0' && c <= '9'){
+                if(d >= '0' && d <= '9'){
+                    rowFlags[j] = parseInt(c)*10+parseInt(d);
                 }
                 else{
-                    rowFlags[j] = c;
+                    rowFlags[j] = parseInt(c);
                 }
             }
             else{
-                rowFlags[j] = '';
-                skipFlags[j] = false;
+                rowFlags[j] = c;
             }
         }
-        delayDash = noDash.slice();
+        
         for(j = 0; j<stringNumber; j++){
-            if (Number.isInteger(rowFlags[j]) && rowFlags[j] > -1){
-                result = rowFlags[j] + num;
-                retArr[j] += result>=0?result:"?";
-                if ((rowFlags[j] > 9) && (result < 10)){
-                    retArr[j] += '-';
+            if(Number.isInteger(rowFlags[j])){
+                newVal = (rowFlags[j] + num);
+                if(newVal >= 0){
+                    modRows[j] = newVal.toString();
                 }
-                else if ((rowFlags[j] < 10) && (result > 9)){
-                    noDash[j] = true;
-                    for (var y = j; y < noDash.length; y++){
-                        if (Number.isInteger(rowFlags[y])){
-                            noDash[y] = true;
-                        }
-                        if(rowFlags[y]<10){
-                            delayDash[y] = true;
-                        }
-                    }
-                    for(var x = 0; x < noDash.length; x++){
-                        if (!noDash[x]){
-                            delayDash[x] = false;
-                            retArr[x] += '-';
-                            noDash[x] = false;
-                        }
-                    }
+                else{
+                    modRows[j] = "?"
                 }
-                
+                rowFlags[j] = (rowFlags[j]).toString();
             }
             else{
-                retArr[j] += rowFlags[j];
+                modRows[j] = rowFlags[j];
             }
         }
-        for(var x = 0; x < delayDash.length;x++){
-            if(delayDash[x]){
-                retArr[x] += "-"
+        
+        caseVal = -1;
+        
+        for(j = 0; j<stringNumber; j++){
+            if(rowFlags[j].length == modRows[j].length && rowFlags[j].length == 1){
+                caseVal = Math.max(caseVal,0);
+            }
+            else if(rowFlags[j].length < modRows[j].length){
+                caseVal = Math.max(caseVal,1);
+            }
+            else{
+                caseVal = 2;
             }
         }
-        noDash = skipFlags.slice();
+        
+        if (caseVal == 0){
+            for(j = 0; j<stringNumber; j++){
+                retArr[j] += modRows[j];
+            }
+        }
+        else{
+            for(j = 0; j<stringNumber; j++){
+                if(modRows[j].length == 2){
+                    retArr[j] += modRows[j];
+                }
+                else{
+                    retArr[j] += modRows[j] + '-';
+                }
+            }
+        }
+        if(caseVal == 2){
+            i++;
+        }
+        
 
     }
     return retArr;
