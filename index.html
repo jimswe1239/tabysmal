@@ -15,12 +15,12 @@
         <div style="margin:auto;">
             <button class = "menuButton" type="button" onclick="showOnly('home')">Home</button>
             <button class = "menuButton" type="button" onclick="showOnly('transposer')">Transposer</button>
-            <button class = "menuButton" type="button" onclick="showOnly('notes')">Notes</button>
+            <button class = "menuButton" type="button" onclick="showOnly('notes')">Note Namer</button>
             <button class = "menuButton" type="button" onclick="showOnly('help')">Help</button>
         </div>
 
         <div id="home" style="display: block;">
-            <p>Select Transposer or Notes on the menu.</p>
+            <p>Select Transposer or Note Namer on the menu.</p>
         </div>
 
         <div id="transposer" style="display: none;">
@@ -52,7 +52,7 @@
         <div id="help" style="display: none;">
             <br>
             
-            <p>- To use this website, paste your tab in the transpose or notes section. Make sure that you only enter one row of tab at a time (so don't paste a whole song, just the riff you're trying to play.) If you want to do a whole song, just do it row by row (i.e. six strings per row), and save the output in a text file.</p>
+            <p>- To use this website, paste your tab in the transposer or note namer section. Make sure that you only enter one row of tab at a time (so don't paste a whole song, just the riff you're trying to play.) If you want to do a whole song, just do it row by row (i.e. six strings per row), and save the output in a text file.</p>
             <p>- If you try to transpose too low, you'll get question marks, meaning that you're trying to play negative frets. Currently, I don't have a fix for this. It might be possible to create a workaround where the same note is added on the next lower string, five frets up, but I haven't actually tried to implement this. Also, if that string is intended to be in use, this wouldn't work anyway. So basically, don't use this app to transpose lower than the lowest fret.</p>
             <p>- This website will not work on tabs that are written with lines where there is no space between note names. Example below.</p>
             <p>- IMPORTANT! Notes will be missed if they are written as a 1-digit fret played simultaneously with a 2-digit fret, where the 2-digit fret comes one hyphen before the 1-digit fret. Unfortunately, you currently must modify your tabs so that all chords are aligned on the left, not the right. Example below.</p>
